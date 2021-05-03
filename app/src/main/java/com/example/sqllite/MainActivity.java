@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.floatingBtn);
         BacaData();
         adapter = new TemanAdapter(temanArrayList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,TemanBaru.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),TemanBaru.class);
                 startActivity(intent);
             }
         });
@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         //Memindah dari hasil query kedalam Teman
         for (int i=0;i<daftarTeman.size();i++){
             Teman teman = new Teman();
-            teman.setId(daftarTeman.get(i).get("id").toString());
-            teman.setNama(daftarTeman.get(i).get("nama").toString());
-            teman.setTelpon(daftarTeman.get(i).get("telpon").toString());
+            teman.setId(daftarTeman.get(i).get("id"));
+            teman.setNama(daftarTeman.get(i).get("nama"));
+            teman.setTelpon(daftarTeman.get(i).get("telpon"));
             //Pindah dari teman.java ke dalam Arraylist teman di adapter
             temanArrayList.add(teman);
         }

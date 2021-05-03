@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sqllite.database.DBController;
-import com.example.sqllite.database.DBController;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashMap;

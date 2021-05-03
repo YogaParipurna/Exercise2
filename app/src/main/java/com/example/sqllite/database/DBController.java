@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DBController extends SQLiteOpenHelper {
+
     public DBController(Context context) {
         super(context, "ProdiTI", null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table teman (id integer primary key, nama text, telpon text)");
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("create table teman (id integer primary key, nama text, telpon text)");
     }
 
     @Override
@@ -37,8 +38,7 @@ public class DBController extends SQLiteOpenHelper {
     }
 
     public ArrayList<HashMap<String,String>> getAllTeman(){
-        ArrayList<HashMap<String,String>> daftarTeman;
-        daftarTeman = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String,String>> daftarTeman = new ArrayList<HashMap<String, String>>() ;
         String selectQuery = "Select * from teman";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -53,5 +53,21 @@ public class DBController extends SQLiteOpenHelper {
         }
         db.close();
         return daftarTeman;
+    }
+    public void updateData(HashMap<String, String> queryValues) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("nama", queryValues.get("nama"));
+        values.put("telpon", queryValues.get("telpon"));
+
+        sqLiteDatabase.update("teman", values, "id = ?", new String[]{queryValues.get("id")});
+        sqLiteDatabase.close();
+    }
+
+    public void deleteData(String id) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete("teman", "id = ?",new String[] {id});
+        sqLiteDatabase.close();
     }
 }
